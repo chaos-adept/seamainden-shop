@@ -7,5 +7,31 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+
+    <p>
+	    <%= user.displayName %>
+	    <% if (!user.isGuest) { %>
+	    	<p> <a href="/users/auth/logout">logout</a></p>
+	    <% } %>
+    </p>
+
+    <p>
+    login form:
+	     <form action="/users/auth/login" method="POST">
+	    	<input placeholder="username" name="username" />
+	    	<input placeholder="password" name="password" />
+	    	<input type="submit" />
+	    </form>   
+    </p>
+
+
+    <p> Register form:
+    <form action="/users/auth/register" method="POST">
+    	<input placeholder="name" name="login" />
+    	<input placeholder="password" name="password" />
+    	<input type="submit" />
+    </form>
+    </p>
   </body>
 </html>
