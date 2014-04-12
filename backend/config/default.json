@@ -1,6 +1,7 @@
 {
 
 	"port": "8080",
+	"host": "localhost",
 
 	"levelDb": {
 		"baseFolder": "./level-db-working-folder"

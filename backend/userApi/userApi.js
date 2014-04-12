@@ -9,6 +9,15 @@ function prepareId(profile) {
     return [profile.provider, profile.id].join(':');
 }
 
+
+
+
+function getTokenForUser(db, profile) {
+    return '123';
+}
+
+
+
 /*
     Найти существующего, или создать запись пользователя
     по данным из PassportJS.
@@ -76,6 +85,7 @@ module.exports = function (db) {
         deserializeUser: getUser.bind(null, db),
         getUser: getUser.bind(null, db),
         storeUser: storeUser.bind(null, db),
-        checkPassword: checkPassword
+        checkPassword: checkPassword,
+        getTokenForUser: getTokenForUser.bind(null, db)
     }
 };

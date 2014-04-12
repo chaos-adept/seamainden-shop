@@ -28,3 +28,5 @@
   content: "";
   padding: 0;
 }
+
+.center-pills { display: inline-block; }

@@ -9,6 +9,7 @@ var level = require('level');
 var UserApi = require('./userApi/userApi');
 var passport = require('passport');
 var passportLocalStrategy = require('passport-local').Strategy;
+var passportFacebookStrategy = require('passport-facebook').Strategy;
 var LeveldbStore = require('connect-leveldb')(express);
 
 var userDb = level(conf.levelDb.baseFolder + '/user', { valueEncoding: 'json' });
@@ -76,6 +77,15 @@ app.get('/users/auth/logout', function (req, res) {
     res.redirect('/');
 });
 
+app.get('/users/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/users/auth/facebook/callback', passport.authenticate('facebook', {
+    failureRedirect: '/app/index.html#login?fault=true'
+}), function (req, res) {
+    var token = userApi.getTokenForUser(res.user);
+    res.redirect('/app/index.html#/login?user_token=123')
+});
+
 // Настройка стратегий авторизации
 
 passport.serializeUser(userApi.serializeUser);
@@ -112,7 +122,14 @@ passport.use(new passportLocalStrategy(function (username, password, callback) {
     })
 }));
 
-
+passport.use(new passportFacebookStrategy({
+        clientID: conf.facebook.id,
+        clientSecret: conf.facebook.secret,
+        callbackURL: 'http://' + conf.host + ':' + conf.port + '/users/auth/facebook/callback'
+    },
+    function (accessToken, refreshToken, profile, callback) {
+        userApi.findOrCreateUser(profile, callback);
+    }));
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

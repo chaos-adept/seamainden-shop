@@ -21,6 +21,7 @@
     "connect-leveldb": "",
     "scrypt": "",
     "passport": "",
+    "passport-oauth2": "",
     "passport-local": "",
     "passport-facebook": "~1.0.0",
     "passport-twitter": "~1.0.0"    
