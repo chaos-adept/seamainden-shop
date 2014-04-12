@@ -1,5 +1,2 @@
 seamainden-shop
 ===============
-
-
-
