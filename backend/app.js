@@ -73,8 +73,7 @@ app.post('/users/auth/login',
     failureRedirect: '/error' }));
 
 app.get('/users/auth/logout', function (req, res) {
-
-    req.logout(); 
+    req.logout();
     res.redirect('/');
 });
 
@@ -84,8 +83,9 @@ app.get('/users/auth/facebook/callback', passport.authenticate('facebook', {
     session: false,
     failureRedirect: '/app/index.html#login?fault=true'
 }), function (req, res) {
-    var token = userApi.generateTokenForUser(req.user);
-    res.redirect('/app/index.html#/login?access_token=' + token)
+    userApi.generateTokenForUser(req.user, function (error, token) {
+        res.redirect('/app/index.html#/login?access_token=' + token)
+    });
 });
 
 app.get('/users/private/test', passport.authenticate('bearer', { session: false }),

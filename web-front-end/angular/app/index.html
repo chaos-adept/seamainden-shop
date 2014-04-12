@@ -21,10 +21,23 @@
 
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+<ul class="menu">
+    <li><a href="#/login">login</a></li>
+    <li><a href="#/welcome">welcome</a></li>
+    <li ng-controller="UserCtrl">
+      <span ng-if="user">
+          user: <b> {{user.username}} </b>
+        <a ng-href ng-click="logout()">logout</a>
+      </span>
+      <span ng-if="!user">
+          user: Guest
+      </span>
+    </li>
+</ul>
+
+
+
+
 
   <div ng-view></div>
 

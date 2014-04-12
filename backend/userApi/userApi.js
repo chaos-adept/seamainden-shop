@@ -7,6 +7,7 @@
  */
 
 var jwt = require('jwt-simple');
+var ttl = require('level-ttl');
 
 var tokenSecret = "token_top_secret";
 
@@ -14,15 +15,41 @@ function prepareId(profile) {
     return ['user', profile.provider, profile.id].join('-');
 }
 
-function generateTokenForUser(db, profile) {
+function tokenToTokenId(token) {
+    return ["token", token].join("-");
+}
+
+function generateTokenForUser(db, profile, callback) {
     var userId = prepareId(profile);
-    return jwt.encode({userId: userId, creationDate:new Date()}, tokenSecret);
+    var token = jwt.encode({}, tokenSecret);
+    var tokenId = tokenToTokenId(token);
+    var ttlDb = ttl(db);
+    ttlDb.put(tokenId,
+        {userId: userId},
+        {ttl: 1000 * 60 * 2} //2 minutes
+        , function (error) {
+            if (error) {
+                callback(error);
+            }
+            else {
+                callback(null, token);
+            }
+        });
+
 }
 
 function findByToken(db, token, callback) {
     var decoded = jwt.decode(token, tokenSecret);
-    //todo check token expiration
-    getUser(db, decoded.userId, callback);
+    var tokenId = db.get(tokenToTokenId(token), function (err, tokenInfo) {
+        //token could be removed by level ttl
+        if (err) {
+            callback(err);
+        }
+
+        if (tokenInfo) {
+            getUser(db, tokenInfo.userId, callback);
+        }
+    });
 }
 
 /*
