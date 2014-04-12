@@ -26,12 +26,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../web-front-end/angular')));
 
 app.use(express.session({
     store: new LeveldbStore({
         dbLocation: conf.levelDb.baseFolder+"/sessions",
-        ttl: 60 * 60 * 2
+        ttl: 60 * 60 * 3
     }),
     secret: 'foobarbaz'
 }));

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "set DEBUG=web-site && node ./bin/www"
+    "start": "set DEBUG=web-site && node ./bin/www",
+    "watch": "supervisor --debug ./bin/www"
   },
   "dependencies": {
     "config": "*",
