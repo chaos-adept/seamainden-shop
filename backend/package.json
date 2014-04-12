@@ -20,8 +20,10 @@
     "level": "~0.17.0",
     "connect-leveldb": "",
     "scrypt": "",
+    "jwt-simple": "",
     "passport": "",
     "passport-oauth2": "",
+    "passport-http-bearer": "",
     "passport-local": "",
     "passport-facebook": "~1.0.0",
     "passport-twitter": "~1.0.0"    

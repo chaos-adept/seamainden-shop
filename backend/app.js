@@ -9,6 +9,7 @@ var level = require('level');
 var UserApi = require('./userApi/userApi');
 var passport = require('passport');
 var passportLocalStrategy = require('passport-local').Strategy;
+var passportBearerStrategy = require('passport-http-bearer').Strategy;
 var passportFacebookStrategy = require('passport-facebook').Strategy;
 var LeveldbStore = require('connect-leveldb')(express);
 
@@ -80,11 +81,17 @@ app.get('/users/auth/logout', function (req, res) {
 app.get('/users/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/users/auth/facebook/callback', passport.authenticate('facebook', {
+    session: false,
     failureRedirect: '/app/index.html#login?fault=true'
 }), function (req, res) {
-    var token = userApi.getTokenForUser(res.user);
-    res.redirect('/app/index.html#/login?user_token=123')
+    var token = userApi.generateTokenForUser(req.user);
+    res.redirect('/app/index.html#/login?access_token=' + token)
 });
+
+app.get('/users/private/test', passport.authenticate('bearer', { session: false }),
+    function(req, res){
+        res.json({ username: req.user.username, email: req.user.email });
+    });
 
 // Настройка стратегий авторизации
 
@@ -121,6 +128,18 @@ passport.use(new passportLocalStrategy(function (username, password, callback) {
 
     })
 }));
+
+passport.use(new passportBearerStrategy({
+    },
+    function(token, done) {
+        userApi.findByToken(token, function(err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false); }
+            return done(null, user);
+        });
+    }
+));
+
 
 passport.use(new passportFacebookStrategy({
         clientID: conf.facebook.id,

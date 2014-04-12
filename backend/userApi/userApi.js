@@ -5,18 +5,25 @@
     Поля provider и id — свойства структуры профиля, которую возвращает
     PasssportJS — http://passportjs.org/guide/profile/
  */
+
+var jwt = require('jwt-simple');
+
+var tokenSecret = "token_top_secret";
+
 function prepareId(profile) {
-    return [profile.provider, profile.id].join(':');
+    return ['user', profile.provider, profile.id].join('-');
 }
 
-
-
-
-function getTokenForUser(db, profile) {
-    return '123';
+function generateTokenForUser(db, profile) {
+    var userId = prepareId(profile);
+    return jwt.encode({userId: userId, creationDate:new Date()}, tokenSecret);
 }
 
-
+function findByToken(db, token, callback) {
+    var decoded = jwt.decode(token, tokenSecret);
+    //todo check token expiration
+    getUser(db, decoded.userId, callback);
+}
 
 /*
     Найти существующего, или создать запись пользователя
@@ -86,6 +93,7 @@ module.exports = function (db) {
         getUser: getUser.bind(null, db),
         storeUser: storeUser.bind(null, db),
         checkPassword: checkPassword,
-        getTokenForUser: getTokenForUser.bind(null, db)
+        generateTokenForUser: generateTokenForUser.bind(null, db),
+        findByToken: findByToken.bind(null, db)
     }
 };
