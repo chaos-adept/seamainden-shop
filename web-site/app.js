@@ -13,9 +13,6 @@ var LeveldbStore = require('connect-leveldb')(express);
 
 var userDb = level(conf.levelDb.baseFolder + '/user', { valueEncoding: 'json' });
 var userApi = UserApi(userDb);
-
-
-
 var app = express();
 
 

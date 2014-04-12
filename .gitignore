@@ -27,3 +27,6 @@ node_modules
 
 # level db database
 level-db-working-folder
+
+# idea
+.idea
