@@ -11,7 +11,6 @@ var passport = require('passport');
 var passportLocalStrategy = require('passport-local').Strategy;
 var passportBearerStrategy = require('passport-http-bearer').Strategy;
 var passportFacebookStrategy = require('passport-facebook').Strategy;
-var LeveldbStore = require('connect-leveldb')(express);
 
 var userDb = level(conf.levelDb.baseFolder + '/user', { valueEncoding: 'json' });
 var userApi = UserApi(userDb);
@@ -29,25 +28,12 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, '../web-front-end/angular')));
-
-app.use(express.session({
-    store: new LeveldbStore({
-        dbLocation: conf.levelDb.baseFolder+"/sessions",
-        ttl: 60 * 60 * 3
-    }),
-    secret: 'foobarbaz'
-}));
 app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(app.router);
 
 // ROUTINES
 
 app.get('/', function(req, res) {
-    console.log("req.user " + req.user);
-    var user = req.user ? req.user : {displayName: "Guest", isGuest:true};
-  res.render('index', { title: 'Express', user:user  });
+    res.redirect('/app/index.html');
 });
 
 
@@ -69,8 +55,11 @@ app.post('/users/auth/register', function (req, res) {
 });
 
 app.post('/users/auth/login', 
-    passport.authenticate('local', { successRedirect: '/',
-    failureRedirect: '/error' }));
+    passport.authenticate('local',
+        {
+            session: false,
+            successRedirect: '/',
+            failureRedirect: '/error' }));
 
 app.get('/users/auth/logout', function (req, res) {
     req.logout();
@@ -93,7 +82,7 @@ app.get('/users/private/test', passport.authenticate('bearer', { session: false 
         res.json({ username: req.user.username, email: req.user.email });
     });
 
-// Настройка стратегий авторизации
+// passport strategies
 
 passport.serializeUser(userApi.serializeUser);
 passport.deserializeUser(userApi.deserializeUser);
