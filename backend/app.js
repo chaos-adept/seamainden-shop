@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, '../web-front-end/angular')));
+app.use(express.static(path.join(__dirname, './public/web-front-end/angular')));
 app.use(passport.initialize());
 
 // ROUTINES
