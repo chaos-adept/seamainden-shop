@@ -4,7 +4,7 @@
 	"host": "localhost",
 
 	"levelDb": {
-		"baseFolder": "./level-db-working-folder"
+		"baseFolder": "./level-db-working-folder/stage"
 	},
 
     "facebook": {
