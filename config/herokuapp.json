@@ -1,4 +1,4 @@
 {
     "host": "seamaiden-shop.herokuapp.com",
-    "PORT": "80"
+    "port": "80"
 }

@@ -3,7 +3,7 @@ var debug = require('debug')('my-application');
 var app = require('../app');
 var conf = require('config');
 
-app.set('port', process.env.PORT || conf.PORT);
+app.set('port', process.env.PORT || conf.port);
 
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
