@@ -5,7 +5,6 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var level = require('level');
 var UserApi = require('./userApi/userApi');
 var passport = require('passport');
 var passportLocalStrategy = require('passport-local').Strategy;
