@@ -12,8 +12,10 @@ var passportLocalStrategy = require('passport-local').Strategy;
 var passportBearerStrategy = require('passport-http-bearer').Strategy;
 var passportFacebookStrategy = require('passport-facebook').Strategy;
 
-var userDb = level(conf.levelDb.baseFolder + '/user', { valueEncoding: 'json' });
-var userApi = UserApi(userDb);
+var redis = require("redis"),
+    client = redis.createClient(conf.redis.port, conf.redis.host, {auth_pass: conf.redis.auth_pass});
+
+var userApi = UserApi(client);
 var app = express();
 
 

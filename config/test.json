@@ -1,6 +1,3 @@
 {
-    "port": "8089",
-    "levelDb": {
-        "baseFolder": "./level-db-working-folder/test"
-    }
+    "port": "8089"
 }
