@@ -29,7 +29,7 @@
         "ejs": "~0.8.5",
         "redis": "",
         "scrypt": "",
-        "jwt-simple": "",
+        "guid": "",
         "passport": "",
         "passport-oauth2": "",
         "passport-http-bearer": "",

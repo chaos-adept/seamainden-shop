@@ -6,9 +6,8 @@
     PasssportJS — http://passportjs.org/guide/profile/
  */
 
-var jwt = require('jwt-simple');
+var Guid = require('guid');
 
-var tokenSecret = "token_top_secret";
 
 function prepareId(profile) {
     return ['user', profile.provider, profile.id].join('-');
@@ -20,7 +19,7 @@ function tokenToTokenId(token) {
 
 function generateTokenForUser(db, profile, callback) {
     var userId = prepareId(profile);
-    var token = jwt.encode({}, tokenSecret);
+    var token = Guid.raw();
     var tokenId = tokenToTokenId(token);
     db.set(tokenId, userId,
          function (error) {
@@ -35,7 +34,6 @@ function generateTokenForUser(db, profile, callback) {
 }
 
 function findByToken(db, token, callback) {
-    var decoded = jwt.decode(token, tokenSecret);
     var tokenId = db.get(tokenToTokenId(token), function (err, userId) {
         //fixme should be one request to db
         if (err) {
@@ -124,6 +122,7 @@ module.exports = function (db) {
         storeUser: storeUser.bind(null, db),
         checkPassword: checkPassword,
         generateTokenForUser: generateTokenForUser.bind(null, db),
-        findByToken: findByToken.bind(null, db)
+        findByToken: findByToken.bind(null, db),
+        prepareId: prepareId.bind(null)
     }
 };

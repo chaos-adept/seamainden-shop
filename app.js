@@ -49,7 +49,13 @@ app.post('/users/auth/register', function (req, res) {
         } else {
             req.login(user, function (error) {
                 if (error) { res.send(500, error); }
-                else { res.redirect('/'); }
+                else {
+                    userApi.generateTokenForUser(user, function (error, token) {
+                        if (error) { res.send(500, error); return; }
+
+                        res.end(token);
+                    });
+                }
             });
         }
     });
@@ -59,8 +65,13 @@ app.post('/users/auth/login',
     passport.authenticate('local',
         {
             session: false,
-            successRedirect: '/',
-            failureRedirect: '/error' }));
+            failureRedirect: '/error' }),
+    function (req, res) {
+        userApi.generateTokenForUser(req.user, function (error, token) {
+            res.end(token);
+        });
+    }
+);
 
 app.get('/users/auth/logout', function (req, res) {
     req.logout();
@@ -94,7 +105,7 @@ passport.use(new passportLocalStrategy(function (username, password, callback) {
         provider: 'local',
         id: username
     };
-    var userId = 'local:' + username;
+    var userId = userApi.prepareId(profile);
     userApi.getUser(userId, function (error, user) {
         if (error) {
             if (error.name == 'NotFoundError') {
