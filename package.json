@@ -1,28 +1,41 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "set DEBUG=web-site && node ./bin/www",
-    "watch": "supervisor --debug ./bin/www"
-  },
-  "dependencies": {
-    "config": "*",
-    "express": "4.x",
-    "static-favicon": "~1.0.0",
-    "morgan": "~1.0.0",
-    "cookie-parser": "~1.0.1",
-    "body-parser": "~1.0.0",
-    "debug": "~0.7.4",
-    "ejs": "~0.8.5",
-    "redis": "",
-    "scrypt": "",
-    "jwt-simple": "",
-    "passport": "",
-    "passport-oauth2": "",
-    "passport-http-bearer": "",
-    "passport-local": "",
-    "passport-facebook": "~1.0.0",
-    "passport-twitter": "~1.0.0"    
-  }
+    "name": "application-name",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "set DEBUG=web-site && node ./bin/www",
+        "watch": "supervisor --debug ./bin/www",
+        "testServerWatch": "set NODE_ENV=test && supervisor --debug ./bin/www",
+        "testw": "set NODE_ENV=test && node ./node_modules/mocha/bin/mocha -w",
+        "test": "set NODE_ENV=test && node ./node_modules/mocha/bin/mocha test/**/unit/*.js"
+    },
+    "engines": {
+        "node": ">=0.6"
+    },
+    "devDependencies": {
+        "mocha": "",
+        "should": "",
+        "supertest": "",
+        "assert": ""
+    },
+    "dependencies": {
+        "config": "*",
+        "express": "4.x",
+        "static-favicon": "~1.0.0",
+        "morgan": "~1.0.0",
+        "cookie-parser": "~1.0.1",
+        "body-parser": "~1.0.0",
+        "debug": "~0.7.4",
+        "ejs": "~0.8.5",
+        "redis": "",
+        "scrypt": "",
+        "jwt-simple": "",
+        "passport": "",
+        "passport-oauth2": "",
+        "passport-http-bearer": "",
+        "passport-local": "",
+        "passport-facebook": "~1.0.0",
+        "passport-twitter": "~1.0.0"
+    }
+
 }
