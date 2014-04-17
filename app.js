@@ -37,6 +37,9 @@ app.get('/', function(req, res) {
     res.redirect('/app/index.html');
 });
 
+app.get('/config', function(req, res) {
+   res.json({catalog: conf.catalog, images: conf.images})
+});
 
 app.post('/users/auth/register', function (req, res) {
     console.log('new user registers', req.body);

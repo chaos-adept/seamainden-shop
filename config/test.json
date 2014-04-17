@@ -1,3 +1,6 @@
 {
-    "port": "8089"
+    "port": "8089",
+    "images": {
+        "baseUrl": "http://fake-host.ru"
+    }
 }
