@@ -19,8 +19,9 @@
     },
     "catalog": {
         "url": "http://seamaiden-shop-dev.s3-website-eu-west-1.amazonaws.com/catalog/catalog.json"
-    },
-    "images": {
-        "baseUrl": "http://seamaiden-shop-dev.s3-website-eu-west-1.amazonaws.com/images"
+        ,
+        "images": {
+            "baseUrl": "http://seamaiden-shop-dev.s3-website-eu-west-1.amazonaws.com/images"
+        }
     }
 }

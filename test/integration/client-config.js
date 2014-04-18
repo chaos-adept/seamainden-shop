@@ -10,7 +10,7 @@ describe('client-config', function() {
             .expect(200)
             .end(function(err, res) {
                 res.body.catalog.url.should.equal( conf.catalog.url );
-                res.body.images.baseUrl.should.equal( conf.images.baseUrl );
+                res.body.catalog.images.baseUrl.should.equal( conf.catalog.images.baseUrl );
                 done(err);
             });
     })
