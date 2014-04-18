@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <!--Sidebar content-->
+
+            Search: <input ng-model="query">
+            всего роботов: <b>{{items.length}}</b>
+        </div>
+
+
+        <div class="span10">
+            <!--Body content-->
+
+
+                <div class="robot-item" ng-repeat="suite in suits | filter:query">
+                    <a ng-href="#/suite/{{suite.id}}">
+                        <strong>{{suite.name}}</strong>
+                        <br/>
+                        <img ng-src="img/content/{{suite.img}}" class="img-rounded">
+                    </a>
+                </div>
+
+        </div>
+    </div>
+</div>

@@ -48,4 +48,12 @@ angular.module('myApp.controllers', [])
 
         $scope.refresh();
 
+    }]).
+    controller('CatalogCtrl', ['$scope','CatalogProvider', function ($scope, CatalogProvider) {
+        CatalogProvider.Load().then(function(data) {
+            $scope.suits = data.suits;
+        });
+
+        //$scope.orderProp = 'age';
+
     }]);
