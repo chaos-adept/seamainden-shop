@@ -49,11 +49,13 @@ angular.module('myApp.controllers', [])
         $scope.refresh();
 
     }]).
-    controller('CatalogCtrl', ['$scope','CatalogProvider', function ($scope, CatalogProvider) {
+    controller('CatalogCtrl', ['$scope','CatalogProvider', 'ConfigResource', function ($scope, CatalogProvider, ConfigResource) {
+        ConfigResource.Get().$promise.then(function (config) {
+            $scope.imgBaseUrl = config.catalog.images.baseUrl;
+        });
+
         CatalogProvider.Load().then(function(data) {
             $scope.suits = data.suits;
         });
-
-        //$scope.orderProp = 'age';
 
     }]);
