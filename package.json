@@ -19,6 +19,7 @@
         "assert": ""
     },
     "dependencies": {
+        "supervisor": "*",
         "config": "*",
         "express": "4.x",
         "static-favicon": "~1.0.0",
