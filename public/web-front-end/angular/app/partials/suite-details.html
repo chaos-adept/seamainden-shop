@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-xs-3">
+        <img ng-src="{{imgBaseUrl}}/{{suite.img}}" class="img-rounded">
+        <img ng-repeat="additionalImg in featuredItem.additionalImages" ng-src="img/content/{{additionalImg}}" class="img-rounded">
+
+    </div>
+    <div class="col-xs-9">
+        <div class="row"  ng-repeat="item in suiteItems">
+            <h3>{{item.name}}</h3>
+
+            <h3>{{item.id}}</h3>
+            <h3>{{item.price}}</h3>
+            <h3>{{item.description}}</h3>
+            <h3>{{item.state}}</h3>
+
+            <select ng-model="item.selectedSize">
+                <option ng-repeat="size in item.sizes">{{size}}</option>
+            </select>
+
+            количество:
+            <select ng-model="item.selectedCount">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+
+            <button ng-click="addToBack(item)">добавить в корзину</button>
+        </div>
+
+    </div>
+
+
+
+
+</div>
