@@ -1,0 +1,17 @@
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="robot-item" ng-repeat="item in cartService.items  | filter:query">
+            <!--<a ng-href="#/suites}">-->
+                <strong>{{item.id}}</strong>
+                <br/>
+                <strong>{{item.size}}</strong>
+                <br/>
+                <strong>{{item.count}}</strong>
+            <!--</a>-->
+        </div>
+
+    </div>
+
+</div>

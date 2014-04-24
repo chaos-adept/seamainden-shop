@@ -26,6 +26,9 @@
     <li><a href="#/login">login</a></li>
     <li><a href="#/welcome">welcome</a></li>
     <li><a href="#/catalog">Catalog</a></li>
+    <li ng-controller="CartPanelController">
+        <a href="#/cart"> Cart ({{cartService.items.length}}) </a>
+    </li>
     <li ng-controller="UserCtrl">
       <span ng-if="user">
           user: <b> {{user.username}} </b>

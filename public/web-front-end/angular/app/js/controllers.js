@@ -59,7 +59,8 @@ angular.module('myApp.controllers', [])
         });
 
     }])
-    .controller('SuiteDetailsCtrl', ['$scope','$http', '$routeParams', 'CatalogProvider', 'ConfigResource', function ($scope, $http, $routeParams, CatalogProvider, ConfigResource) {
+    .controller('SuiteDetailsCtrl', ['$scope','$http', '$routeParams', 'CatalogProvider', 'ConfigResource', 'CartService',
+                            function ($scope, $http, $routeParams, CatalogProvider, ConfigResource, cartService) {
         $scope.suiteId = $routeParams.id;
 
         ConfigResource.Get().$promise.then(function (config) {
@@ -79,13 +80,20 @@ angular.module('myApp.controllers', [])
 
         $scope.addToBack = function (item) {
             //alert(item.id + ' count: ' + item.selectedCount + ' size: ' + item.selectedSize);
-            $http.post('/action/addToBag', {itemId: item.id, size: item.selectedSize, count: item.selectedCount}).success(
-                function(responseData) {
-                    //do stuff with response
-                });
+//            $http.post('/action/addToBag', {itemId: item.id, size: item.selectedSize, count: item.selectedCount}).success(
+//                function(responseData) {
+//                    //do stuff with response
+//                });
+            cartService.add(item);
         };
 
         //$scope.orderProp = 'age';
 
+    }])
+    .controller('CartPanelController', ['$scope', 'CartService', function($scope, cartService) {
+        $scope.cartService = cartService;
+    }])
+    .controller('CartCtrl', ['$scope', 'CartService', function ($scope, cartService) {
+        $scope.cartService = cartService;
     }])
 ;

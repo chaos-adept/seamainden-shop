@@ -28,5 +28,29 @@ angular.module('myApp.services', []).
                 return defer.promise;
             }
         }
-    }]);
+    }])
+    .factory('CartService', ['$q', function () {
+        function loadCart() {
+            var cart = window.localStorage.getItem('cart');
+            return cart ? JSON.parse(cart) : [];
+        }
+
+        function saveCart(cart) {
+            window.localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        return {
+            items: loadCart(),
+
+            'add': function (itemInfo) {
+                this.items.push(itemInfo);
+                saveCart(this.items)
+
+            },
+            'refresh': function () {
+                this.items = loadCart();
+            }
+        }
+    }])
+;
 

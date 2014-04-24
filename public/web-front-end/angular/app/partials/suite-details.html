@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-3">
-        <img ng-src="{{imgBaseUrl}}/{{suite.img}}" class="img-rounded">
+        <img ng-src="{{imgBaseUrl}}/{{suite.img}}" width="100%" class="img-rounded">
         <img ng-repeat="additionalImg in featuredItem.additionalImages" ng-src="img/content/{{additionalImg}}" class="img-rounded">
 
     </div>
@@ -25,7 +25,7 @@
                 <option>4</option>
             </select>
 
-            <button ng-click="addToBack(item)">добавить в корзину</button>
+            <button ng-click="addToBack({id:item.id, size:item.selectedSize, count:item.selectedCount})">добавить в корзину</button>
         </div>
 
     </div>
