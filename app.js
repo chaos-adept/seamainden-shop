@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var UserApi = require('./userApi/userApi');
+var CartApi = require('./rest-api/cart-api');
 var passport = require('passport');
 var passportLocalStrategy = require('passport-local').Strategy;
 var passportBearerStrategy = require('passport-http-bearer').Strategy;
@@ -15,6 +16,7 @@ var redis = require("redis"),
     client = redis.createClient(conf.redis.port, conf.redis.host, {auth_pass: conf.redis.auth_pass});
 
 var userApi = UserApi(client);
+var cartApi = CartApi();
 var app = express();
 
 
@@ -96,6 +98,16 @@ app.get('/users/private/test', passport.authenticate('bearer', { session: false 
     function(req, res){
         res.json({ username: req.user.username, email: req.user.email });
     });
+
+app.post('/cart/buy', passport.authenticate('bearer', { session: false }), function (req, res) {
+    cartApi.buy(req.body);
+    res.json({status:'PENDING_STATUS'});
+});
+
+app.get('/cart/list', passport.authenticate('bearer', { session: false }), function (req, res) {
+    var carts = cartApi.list();
+    res.json(carts);
+});
 
 // passport strategies
 

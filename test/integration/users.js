@@ -14,7 +14,7 @@ describe('users', function() {
                 firstToken = res.text;
                 done()
             });
-    })
+    });
     it('should Generate Unic Tokens for the same user', function(done) {
         request(url)
             .post('/users/auth/login')
