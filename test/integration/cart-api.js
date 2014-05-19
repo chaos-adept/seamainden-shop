@@ -1,6 +1,7 @@
 var request = require('supertest'),
     conf = require('config'),
     should = require('should'),
+    extend = require('util')._extend,
     url = "http://" + conf.host + ':' + conf.port;
 
 
@@ -24,6 +25,9 @@ describe('cart-api', function() {
                 {id:"id2", count:124}
             ]
         };
+
+        var pending_cart = extend({}, cart);
+        pending_cart.status = 'PENDING_STATUS';
 
         beforeEach(function(done){
             request(url)
@@ -56,8 +60,9 @@ describe('cart-api', function() {
                 .set('Authorization', "Bearer " + accces_token)
                 .expect(200)
                 .end(function (err, res){
-                    res.body.should.eql({list:[cart]});
-                   done(err);
+                    var expected = {list:[pending_cart]};
+                    res.body.should.eql(expected);
+                    done(err);
                 });
         });
     });
